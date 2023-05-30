@@ -1,5 +1,6 @@
 from constants import DATASET_DIR_NAME, DATASET_METADATA_DIR_NAME
 import os
+from pathlib import Path
 
 """ 
     Check if directory or file exists
@@ -29,3 +30,11 @@ def list_dir(directory):
         if name in directories:
             directories.remove(name)
     return directories
+
+"""
+    Get file name (without extension) from absolute path
+"""
+
+def get_extension(path):
+    extension =  Path(path).stem
+    return extension

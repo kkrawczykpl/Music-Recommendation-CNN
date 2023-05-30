@@ -28,7 +28,7 @@ def load_songs():
     for songs_label_directory in songs_directories:
         song_label_directory_path = f"{DATASET_DIR_NAME}/{songs_label_directory}"
         files = [os.path.abspath(os.path.join(song_label_directory_path, f)) for f in list_dir(song_label_directory_path)]
-        songs.append(files)
+        songs.extend(files)
 
     return songs
 """ 
