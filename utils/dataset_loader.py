@@ -30,7 +30,7 @@ def load_songs():
         files = [os.path.abspath(os.path.join(song_label_directory_path, f)) for f in list_dir(song_label_directory_path)]
         songs.extend(files)
 
-    return songs
+    return songs[:20]
 """ 
 Load each 30s music file and turn it into mel-spectograms using spectogram.py
 """
