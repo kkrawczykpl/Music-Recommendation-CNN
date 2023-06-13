@@ -1,5 +1,8 @@
 from matplotlib import pyplot as plt
 import librosa
+import os
+import re
+from PIL import Image
 from dataset_loader import get_metadata, load_songs
 from file_handler import get_extension, create_if_not_exists
 from constants import SPECTOGRAM_IMAGAES_DIR_NAME
@@ -36,8 +39,4 @@ def create_spectogram(filepath):
 
 create_spectogram("123")
 
-""" 
-    Split spectogram image into smaller parts
-"""
-def split_spectogram():
-    return None
+
