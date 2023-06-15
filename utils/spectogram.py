@@ -143,10 +143,11 @@ def load_dataset(datasetSize=0.7):
 
     images_all, labels_all = get_images_and_labels()
     
-    images = labels = []
+    images = []
+    labels = []
 
-    count_max = int(len(images_all)* datasetSize / len(GENRES))
     n_classes = len(GENRES)
+    count_max = int(len(images_all) * datasetSize / n_classes)
     count_array = [0 for _ in range(n_classes)]
 
     for i in range(0, len(images_all)):
@@ -154,6 +155,9 @@ def load_dataset(datasetSize=0.7):
             images.append(images_all[i])
             labels.append(labels_all[i])
             count_array[labels_all[i]] += 1
+
+    images = np.array(images)
+    labels = np.array(labels)
 
     images = np.array(images)
     labels = np.array(labels)
@@ -167,38 +171,42 @@ def load_dataset(datasetSize=0.7):
     genre_new = {value: key for key, value in GENRES.items()}
 
     if is_path(TRAINING_DATA_DIR_NAME):
-        return load_training_output(), n_classes, genre_new
+        train_x, train_y, test_x, test_y = load_training_output()
+        return train_x, train_y, test_x, test_y, n_classes, genre_new
 
-    return save_training_output(train_x, train_y, test_x, test_y, n_classes, genre_new)
+    save_training_output(train_x, train_y, test_x, test_y)
+    return train_x, train_y, test_x, test_y, n_classes, genre_new
 
 """
     Returns images and labels from SPECTOGRAM_SPLIT_DIR_NAME directory
 """
 def get_images_and_labels():
     images = load_images(SPECTOGRAM_SPLIT_DIR_NAME)
-    images_all = labels_all = [None for _ in range(len(images))]
+    images_all = [None for _ in range(len(images))]
+    labels_all = [None for _ in range(len(images))]
 
     for image in images:
         filename = get_song_name(image)
         index = get_index(filename)
         genre = get_genre(image)
+
         temp = cv2.imread(image, cv2.IMREAD_UNCHANGED)
+
         images_all[index] = cv2.cvtColor(temp, cv2.COLOR_BGR2GRAY)
         labels_all[index] = GENRES[genre]
-    
+
     return images_all, labels_all
 
 """
     Save training matrices to npy files in TRAINING_DATA_DIR_NAME
 """
 
-def save_training_output(train_x, train_y, test_x, test_y, n_classes, genre_new, directory=TRAINING_DATA_DIR_NAME):
+def save_training_output(train_x, train_y, test_x, test_y, directory=TRAINING_DATA_DIR_NAME):
     create_if_not_exists(directory)
     np.save(f'{TRAINING_DATA_DIR_NAME}/train_x.npy', train_x)
     np.save(f'{TRAINING_DATA_DIR_NAME}/train_y.npy', train_y)
     np.save(f'{TRAINING_DATA_DIR_NAME}/test_x.npy', test_x)
     np.save(f'{TRAINING_DATA_DIR_NAME}/test_y.npy', test_y)
-    return train_x, train_y, test_x, test_y, n_classes, genre_new
 
 """
     Loads  training matrices (npy files) from directory
