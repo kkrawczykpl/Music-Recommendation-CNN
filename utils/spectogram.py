@@ -176,7 +176,7 @@ def load_dataset(datasetSize=0.7):
 """
 def get_images_and_labels():
     images = load_images(SPECTOGRAM_SPLIT_DIR_NAME)
-    images_all = labels_all = [None for _ in range(images)]
+    images_all = labels_all = [None for _ in range(len(images))]
 
     for image in images:
         filename = get_song_name(image)
