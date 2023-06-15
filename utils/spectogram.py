@@ -94,7 +94,8 @@ def split_spectogram():
     counter = 0
     for image in images:
         genre = get_genre(image)
-        filename = f'{TEST_SPECTOGRAM_IMAGAES_DIR_NAME}/{counter}_{genre}.jpg'
+        filename = f'{SPECTOGRAM_IMAGAES_DIR_NAME}/{counter}_{genre}.jpg'
+        create_split_spectogram(image, filename)
         counter = counter + 1
     return
 
