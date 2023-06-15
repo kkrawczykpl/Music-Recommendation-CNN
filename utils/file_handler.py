@@ -1,4 +1,3 @@
-from constants import DATASET_DIR_NAME, DATASET_METADATA_DIR_NAME
 import os
 from pathlib import Path
 
@@ -35,6 +34,6 @@ def list_dir(directory):
     Get file name (without extension) from absolute path
 """
 
-def get_extension(path):
+def get_song_name(path):
     extension =  Path(path).stem
     return extension

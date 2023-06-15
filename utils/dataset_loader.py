@@ -1,5 +1,5 @@
-from constants import DATASET_DIR_NAME, DATASET_METADATA_DIR_NAME
-from file_handler import is_path, list_dir
+from utils.constants import DATASET_DIR_NAME, DATASET_METADATA_DIR_NAME, SPECTOGRAM_IMAGAES_DIR_NAME
+from utils.file_handler import is_path, list_dir
 import pandas as pd
 import os
 
@@ -21,21 +21,35 @@ def get_metadata(path = f"{DATASET_DIR_NAME}/{DATASET_METADATA_DIR_NAME}/tracks.
     Iterate over every directory in data and return list of songs.
     Name of the directory is label, which can be decoded using metadata 
 """
-
-def load_songs():
+def load_songs(directory=DATASET_DIR_NAME):
     songs = []
-    songs_directories = list_dir(DATASET_DIR_NAME)
+    songs_directories = list_dir(directory)
     for songs_label_directory in songs_directories:
-        song_label_directory_path = f"{DATASET_DIR_NAME}/{songs_label_directory}"
+        if songs_label_directory.endswith('.mp3'):
+            songs.extend([songs_label_directory])
+            continue
+
+        song_label_directory_path = f"{directory}/{songs_label_directory}"
         files = [os.path.abspath(os.path.join(song_label_directory_path, f)) for f in list_dir(song_label_directory_path)]
         songs.extend(files)
 
-    return songs[:20]
-""" 
-Load each 30s music file and turn it into mel-spectograms using spectogram.py
+    return songs[:1400]
+
 """
+    Load images from directory
+"""
+def load_images(directory=SPECTOGRAM_IMAGAES_DIR_NAME):
+    image_files = [os.path.join(directory, f) for f in list_dir(directory) if f.endswith(".jpg")]
+    return image_files
 
-def load_data():
-    print(load_songs())
+"""
+    Extract genre from filename
+"""
+def get_genre(filename):
+    return filename[filename.rfind('_') + 1:filename.rfind('.')]
 
-load_data()
+"""
+    Extract index from filename
+"""
+def get_index(filename):
+    return int(filename[:filename.find('_')])

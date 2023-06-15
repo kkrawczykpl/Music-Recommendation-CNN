@@ -4,3 +4,4 @@ pillow
 librosa
 opencv-python
 pandas
+tensorflow
