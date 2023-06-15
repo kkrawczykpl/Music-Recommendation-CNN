@@ -26,8 +26,8 @@ def get_extension(path):
     extension =  Path(path).stem
     return extension
 
-for song in list_dir('C:\\Users\\KrzysztofKrawczyk\\Desktop\\Research\\Music-Recommendation-CNN\\test_data'):
-    song_path = os.path.normpath(f'C:\\Users\\KrzysztofKrawczyk\\Desktop\\Research\\Music-Recommendation-CNN\\test_data\\{song}')
+for song in list_dir('test_data'):
+    song_path = os.path.normpath(f'test_data\\{song}')
     song_name = str(song)
     song = AudioSegment.from_mp3(song_path)
 
