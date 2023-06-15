@@ -79,7 +79,7 @@ def split_test_spectogram():
     counter = 0
     for image in images:
         song_name = get_song_name(image)
-        filename = f'{TEST_SPECTOGRAM_IMAGAES_DIR_NAME}/{counter}_{song_name}.jpg'
+        filename = f'{TEST_SPECTOGRAM_SPLIT_DIR_NAME}/{counter}_{song_name}.jpg'
         create_split_spectogram(image, filename)
         counter = counter + 1
 
@@ -94,7 +94,7 @@ def split_spectogram():
     counter = 0
     for image in images:
         genre = get_genre(image)
-        filename = f'{SPECTOGRAM_IMAGAES_DIR_NAME}/{counter}_{genre}.jpg'
+        filename = f'{SPECTOGRAM_SPLIT_DIR_NAME}/{counter}_{genre}.jpg'
         create_split_spectogram(image, filename)
         counter = counter + 1
     return
